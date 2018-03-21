@@ -3,8 +3,9 @@ element of list L1 occurs one in list L2. That is,
 one_occurrence(L1, L2) removes double occurrences of elements
 from list L1. Implement the predicate one_occurrence/2 with the
 following techniques:
-a)Structure construction in the head of clauses and
+
 b) Structure construction in the body of clauses.
+
 For the implementation of this predicate you can use the predicate
 member/2.
 For example, the answer to the query
