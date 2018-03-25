@@ -16,7 +16,7 @@ kb('Eleni',plays,tennis).
 
 %%Rules
 %%collect_results/0 gives the use a number of options,
-%% and then calculates the result depending on the users choise
+%% and then returns the result depending on the users choise
 collect_results:-
   printer, %% a predicate that will display the options the user has
   read(X), %% read the input from the user
@@ -55,7 +55,6 @@ decide(X):-
     handle_verb(Y,L),
     write(L),
     nl.
-
 decide(X):-
     X==5, %% the user has chosen to close the programm
     write('You have chosen to exit! Bye bye!'), %% say bye-bye
@@ -66,26 +65,32 @@ decide(X):-
     nl,
     collect_results. %% and restart the logic
 
+%% handle_name/2 finds all interests of the person(Y)
+%%and returns them in a list(L)
 handle_name(Y,L):-
   findall(Care,kb(Y,_,Care), Bag),
   append([],Bag,L).
 
+%%handle_lesson/2 finds all the persons that likes a lesson (Y)
+%%and returns them in a list(L)
 handle_lesson(Y,L):-
   findall(Care,kb(Care,likes,Y), Bag),
   append([],Bag,L).
 
+%%handle_game/2 finds all the persons that plays a game(Y)
+%% and returns them in a list(L)
 handle_game(Y,L):-
   findall(Care,kb(Care,plays,Y), Bag),
   append([],Bag,L).
 
+%%handle_verb/2 Finds all the subjects (persons) and objects(games and lessons)
+%%that are related through the verb(Y) and returns them in a list(L)
 handle_verb(Y, L):-
   findall(Name,kb(Name,Y,_), Bag),
-  %append([],Bag,NameList),
   findall(Int,kb(_, Y, Int),Bag2),
-  %append([],Bag2,IntList).
   append(Bag,Bag2,L).
 
-
+%%printer/0 creates the Interface that guides the users through the options
 printer:-
   write('input a number from the selection bellow'),
   nl,
@@ -99,7 +104,7 @@ printer:-
   nl,
   write('    -like to learn students preferences in lessons'),
   nl,
-  write('    -plays to leran students preferences in games'),
+  write('    -plays to learn students preferences in games'),
   nl,
   write('5 - Exit the program'),
   nl.
