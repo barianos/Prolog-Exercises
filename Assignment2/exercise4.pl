@@ -73,7 +73,7 @@ update_indicators:-
 
 
 
-%% Handles UI
+%% Handles UI for input of data
 input_data(NewSname,NewSschool, NewSphone, NewSlessons):-
   write('Input student name'),
   nl,
