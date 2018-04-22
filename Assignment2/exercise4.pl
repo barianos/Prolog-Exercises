@@ -1,17 +1,9 @@
-%% make predicates student, max_student_id and students dynamic
-%% so we can change the knowledge base
-:- dynamic max_student_id/1, students/1, student/2.
-max_student_id(4).
-students([1,2,3,4]).
-student(1, [m_markakis, ie, 2810379747,[ai,maths] ]).
-student(2, [p_papadakis, ie, 2810379719,[ai,maths] ]).
-student(3, [s_ioannou, ie, 2810379727,[ai,maths,progr] ]).
-student(4, [v_fragou, ie, 2810379768,[ai,maths,physics] ]).
+:-[exercise3]. %%Consult exercise3
 
-update_KB :-
-  printer,
-  read(X),
-  decide(X).
+update_KB :-    %%the main predicate of the program
+  printer,    %%print the menu to the user
+  read(X),    %%read user input
+  decide(X).  %%handle user input
 
 %% decide/1 takes the input the user gave and decides what must be done
 decide(X) :-
@@ -26,7 +18,10 @@ decide(X):-
 decide(X) :-
   (X>3 ; X<1), %% exit the program
   write('You have chosen to exit! Bye bye!'), %% say bye-bye
+  save_KB,    %%use predicate from exercise 3 to save the KB
   abort. %%close the programm
+
+
 
 %% Deletes a student from the records
 delete_record :-

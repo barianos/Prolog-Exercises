@@ -1,0 +1,9 @@
+max_student_id(4).
+
+students([1,2,3,4]).
+
+student(1, [m_markakis,ie,2810379747,[ai,maths]]).
+student(3, [s_ioannou,ie,2810379727,[ai,maths,progr]]).
+student(4, [v_fragou,ie,2810379768,[ai,maths,physics]]).
+student(2, [tasos,epp,6965,ai]).
+
