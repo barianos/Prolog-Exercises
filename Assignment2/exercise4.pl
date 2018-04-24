@@ -38,7 +38,7 @@ create_record :-
   NewSid is Mid+1,
   assertz(student(NewSid,[NewSname,NewSschool,NewSphone, NewSlessons])),
   update_indicators,
-  write('The identidier is '),
+  write('The identifier is '),
   write(NewSid),
   nl.
 
