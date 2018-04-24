@@ -1,17 +1,14 @@
-replace_var_args(Term,_,_) :- %%values is a list,
+replace_var_args(Term,_,Term) :-
   ground(Term). %if term is a grounded term there is nothing more to do
 
-replace_var_args(Term,[H|T],NewTerm) :- %%values is a list,
+replace_var_args(Term,[H|T],NewTerm) :-
   \+ground(Term),   %%if Term is not a grounded term it has variables
   variables(Term,Var),  %%find the variables in the term
   replace_var_args2(Term,[H|T],Var,NewTerm).  %%replace the variables
 
 
-replace_var_args2(Term,_,_,_):-
+replace_var_args2(Term,_,_,Term):-
   ground(Term).    %if term is a grounded term there is nothing more to do
-
-replace_var_args2(_,[],[],_).%:-
-  %write('done').
 
 
 replace_var_args2(Term,[H|T],[Var1|Var2],NewTerm):-
@@ -22,33 +19,9 @@ replace_var_args2(Term,[H|T],[Var1|Var2],NewTerm):-
                                               %%done
 
 
-%% predicate found online
-%% https://stackoverflow.com/questions/43840503/how-to-get-list-of-atom-variables-from-a-term-in-prolog
-variables(T,V):- %predicate to give us the variables within the Term
-    variables(T,[],V1),
-    sort(V1,V).
-
-variables(T,Acc,[T|V]):-
-    var(T), !,
-    variables(Acc,[],V).
-variables([],[],[]).
-variables([],Acc,V):-
-    variables(Acc,[],V).
-variables([H|T],Acc,V):-
-    append(T,Acc,NewAcc),
-    variables(H,NewAcc,V).
-variables(T,Acc,V):-
-    atom(T),
-    variables(Acc,[],V).
-variables(T,Acc,V):-
-    T=.. [_F|AL],
-    variables(AL,Acc,V).
-
-
-
 
 /* Substitute predicate as described in the book "Prolog:programatismos se
-logiki gia texniti noimosini" */
+logiki gia texniti noimosini" by Manolis Marakakis*/
 substitute1(Old,New,Term,New):-
   atomic(Term),
   Term = Old.
@@ -73,3 +46,27 @@ substitute2(N,Old,New,Term,Term1):-
   arg(N,Term1,Arg1),
   N1 is N-1,
   substitute2(N1,Old,New,Term,Term1).
+
+
+
+%% predicate found online
+%% https://stackoverflow.com/questions/43840503/how-to-get-list-of-atom-variables-from-a-term-in-prolog
+variables(T,V):- %predicate to give us the variables within the Term
+    variables(T,[],V1),
+    sort(V1,V).
+
+variables(T,Acc,[T|V]):-
+    var(T), !,
+    variables(Acc,[],V).
+variables([],[],[]).
+variables([],Acc,V):-
+    variables(Acc,[],V).
+variables([H|T],Acc,V):-
+    append(T,Acc,NewAcc),
+    variables(H,NewAcc,V).
+variables(T,Acc,V):-
+    atom(T),
+    variables(Acc,[],V).
+variables(T,Acc,V):-
+    T=.. [_F|AL],
+    variables(AL,Acc,V).
