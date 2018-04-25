@@ -1,6 +1,10 @@
 replace_var_args(Term,_,Term) :-
   ground(Term). %if term is a grounded term there is nothing more to do
 
+
+replace_var_args(Term,Values,Term):-
+  isEmpty(Values).   %%if there are no more values we are done
+
 replace_var_args(Term,[H|T],NewTerm) :-
   \+ground(Term),   %%if Term is not a grounded term it has variables
   variables(Term,Var),  %%find the variables in the term
@@ -11,6 +15,10 @@ replace_var_args2(Term,_,_,Term):-
   ground(Term).    %if term is a grounded term there is nothing more to do
 
 
+replace_var_args2(Term,Values, Variables,Term):-
+  isEmpty(Values) ;   %%if there are no more values or variables, we are done
+  isEmpty(Variables).
+
 replace_var_args2(Term,[H|T],[Var1|Var2],NewTerm):-
   \+ground(Term), %%continue only if Term is not grounded
   substitute1(Var1,Term,H,TempTerm), %%substitute the first variable with
@@ -19,6 +27,11 @@ replace_var_args2(Term,[H|T],[Var1|Var2],NewTerm):-
                                               %%done
 
 
+%% Predica isEmpty is true if the provided list is empty
+isEmpty([]).
+isEmpty(Q):-
+  Q \= [],
+  fail.
 
 /* Substitute predicate as described in the book "Prolog:programatismos se
 logiki gia texniti noimosini" by Manolis Marakakis*/
