@@ -3,6 +3,7 @@
 *.pdf
 *.jpg
 *.jpeg
+*.docx
 tests.pl
 test.pl
 *.txt
